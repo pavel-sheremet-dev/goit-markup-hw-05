@@ -8,6 +8,7 @@
   --alternate-logo-color: #ffffff;
   --accent-color: #2196f3;
   --hover-modal-btn-color: #188ce8;
+  --overlay-color: rgba(33, 150, 243, 0.9);
   --footer-contacts-color: rgba(255, 255, 255, 0.6);
   --filter-btn-color: #f5f4fa;
   --hr-border-color: #ececec;
@@ -16,6 +17,7 @@
   --dark-theme-icon-bgc: rgba(255, 255, 255, 0.1);
   --logo-font-family: 'Raleway', 'Arial', 'Helvetica', sans-serif;
   --main-font-family: 'Roboto', 'Arial', 'Helvetica', sans-serif;
+  --timing-func: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ------------------------- END VARIABLES ------------------------- */
@@ -30,6 +32,7 @@ body {
 .link {
   text-decoration: none;
   color: inherit;
+  transition: color 250ms var(--timing-func);
 }
 
 .list {
@@ -106,8 +109,8 @@ b {
   color: var(--main-logo-color);
 }
 
-.nav-list-link.accent-color,
-.accent-color {
+.accent-color,
+.nav-list-link.accent-color {
   color: var(--accent-color);
 }
 
@@ -136,6 +139,8 @@ b {
   border: none;
   border-radius: 4px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+
+  transition: background-color 250ms var(--timing-func);
 }
 
 .modal-btn:hover,
@@ -163,6 +168,10 @@ b {
   cursor: pointer;
   border: none;
   border-radius: 4px;
+
+  transition: color 250ms var(--timing-func),
+    background-color 250ms var(--timing-func),
+    box-shadow 250ms var(--timing-func);
 }
 
 .filter-list-btn:hover,
@@ -240,6 +249,7 @@ b {
 
 .nav-list-link,
 .page-header-contacts-link {
+  position: relative;
   padding-top: 32px;
   padding-bottom: 32px;
   font-weight: 500;
@@ -250,6 +260,28 @@ b {
 
 .nav-list-link {
   color: var(--titles-text-color);
+}
+
+.nav-list-link::after {
+  position: absolute;
+  bottom: 0;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--accent-color);
+  transform: scale(0);
+  transition: transform 250ms var(--timing-func);
+}
+
+.nav-list-link.accent-color::after {
+  transform: scale(1);
+}
+
+.nav-list-link:hover::after,
+.nav-list-link:focus::after {
+  transform: scale(1);
 }
 
 .nav-list-link:hover,
@@ -270,16 +302,6 @@ b {
   margin-right: 10px;
   display: block;
   fill: currentColor;
-}
-
-.smartphone-icon {
-  width: 10px;
-  height: 16px;
-}
-
-.envelope-icon {
-  width: 16px;
-  height: 12px;
 }
 
 /* ------------------------- END HEADER ------------------------- */
@@ -369,10 +391,12 @@ b {
 
 .light-theme-icon-bgc {
   background-color: var(--alternate-logo-color);
+  transition: background-color 250ms var(--timing-func);
 }
 
 .light-theme-icon {
   fill: var(--link-icons-color);
+  transition: fill 250ms var(--timing-func);
 }
 
 .social-list-link:hover,
@@ -387,6 +411,7 @@ b {
 
 .dark-theme-icon-bgc {
   background-color: var(--dark-theme-icon-bgc);
+  transition: background-color 250ms var(--timing-func);
 }
 
 .dark-theme-icon {
@@ -501,9 +526,29 @@ b {
 }
 
 .services-list-item {
+  position: relative;
   flex-basis: calc((100% - 90px) / 3);
   margin-left: 30px;
   margin-top: 30px;
+}
+
+.servise-list-item-desctiprtion {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 27px;
+  padding-bottom: 27px;
+  padding-left: 24px;
+  padding-right: 24px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.14;
+  text-align: center;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background-color: rgba(47, 48, 58, 0.8);
+  color: var(--alternate-logo-color);
 }
 
 /* ------------------------- END SERVICES ------------------------- */
@@ -586,6 +631,7 @@ b {
   border-style: solid;
   border-radius: 4px;
   border-color: var(--link-icons-color);
+  transition: border-color 250ms var(--timing-func);
 }
 
 .client-icon {
@@ -603,34 +649,6 @@ b {
 .clients-list-link:focus .client-icon {
   fill: var(--accent-color);
 }
-
-/* Другой вариант применить бордер и фил*/
-
-/* .clients-list-link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 4px;
- 
-  color: green;
-  border-color: inherit;
-}
-
-.client-icon {
-  display: block;
-  fill: currentColor;
-}
-
-.clients-list-link:hover,
-.clients-list-link:focus {
-  color: red;
-} */
-
-/* //////////////////// */
 
 /* ------------------------- END CLIENTS ------------------------- */
 
@@ -665,9 +683,47 @@ b {
   margin-top: 30px;
 }
 
-.projects-list-item-link:hover {
+.projects-list-item-link {
+  transition: box-shadow 250ms var(--timing-func);
+}
+
+.projects-list-item-link:hover,
+.projects-list-item-link:focus {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
     1px 4px 6px rgba(0, 0, 0, 0.16);
+}
+
+.projects-list-item-img-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay-description {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(100%);
+  overflow: auto;
+
+  padding-top: 63px;
+  padding-right: 24px;
+  padding-bottom: 63px;
+  padding-left: 24px;
+  width: 100%;
+  height: 100%;
+
+  font-size: 18px;
+  line-height: 1.56;
+  letter-spacing: 0.03em;
+  background-color: var(--overlay-color);
+  color: var(--alternate-logo-color);
+
+  transition: transform 250ms var(--timing-func);
+}
+
+.projects-list-item-link:hover .overlay-description,
+.projects-list-item-link:focus .overlay-description {
+  transform: translateY(0);
 }
 
 .projects-card {
@@ -695,3 +751,63 @@ b {
 }
 
 /* ------------------------- END PORTFOLIO ------------------------- */
+
+/* ------------------------- MODAL WINDOW ------------------------- */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  transition: opacity 250ms var(--timing-func),
+    visibility 250ms var(--timing-func);
+}
+
+.is-hidden-backdrop {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal-window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 528px;
+  /* temporary */
+  height: 400px;
+  transform: translate(-50%, -50%) scaleY(1);
+  border-radius: 4px;
+  background-color: var(--alternate-logo-color);
+  transition: transform 250ms var(--timing-func);
+}
+
+.is-hidden-modal {
+  transform: translate(-50%, -50%) scaleY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.close-icon {
+  width: 10px;
+  height: 10px;
+  fill: var(--main-logo-color);
+}
+
+/* ------------------------- END MODAL WINDOW ------------------------- */
